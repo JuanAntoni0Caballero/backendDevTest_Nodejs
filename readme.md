@@ -1,33 +1,89 @@
-# Backend dev technical test
-We want to offer a new feature to our customers showing similar products to the one they are currently seeing. To do this we agreed with our front-end applications to create a new REST API operation that will provide them the product detail of the similar products for a given one. [Here](./similarProducts.yaml) is the contract we agreed.
+# Proyecto Backend: API de Productos
 
-We already have an endpoint that provides the product Ids similar for a given one. We also have another endpoint that returns the product detail by product Id. [Here](./existingApis.yaml) is the documentation of the existing APIs.
+Este proyecto es una API REST que permite obtener información sobre productos y productos similares mediante solicitudes HTTP.
 
-**Create a Spring boot application that exposes the agreed REST API on port 5000.**
+## Configuración inicial
 
-![Diagram](./assets/diagram.jpg "Diagram")
+Antes de ejecutar la aplicación, asegúrate de tener configurado el entorno de desarrollo correctamente.
 
-Note that _Test_ and _Mocks_ components are given, you must only implement _yourApp_.
+Antes de ejecutar la aplicación, asegúrate de tener instalado:
 
-## Testing and Self-evaluation
-You can run the same test we will put through your application. You just need to have docker installed.
+- [Node.js](https://nodejs.org/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
-First of all, you may need to enable file sharing for the `shared` folder on your docker dashboard -> settings -> resources -> file sharing.
+## Scripts disponibles
 
-Then you can start the mocks and other needed infrastructure with the following command.
-```
-docker-compose up -d simulado influxdb grafana
-```
-Check that mocks are working with a sample request to [http://localhost:3001/product/1/similarids](http://localhost:3001/product/1/similarids).
+En el directorio del proyecto, puedes ejecutar los siguientes comandos:
 
-To execute the test run:
-```
-docker-compose run --rm k6 run scripts/test.js
-```
-Browse [http://localhost:3000/d/Le2Ku9NMk/k6-performance-test](http://localhost:3000/d/Le2Ku9NMk/k6-performance-test) to view the results.
+### `npm install`
 
-## Evaluation
-The following topics will be considered:
-- Code clarity and maintainability
-- Performance
-- Resilience
+Instala las dependencias del proyecto.
+
+### `npm run dev`
+
+Ejecuta la aplicación en modo desarrollo con nodemon. La API estará disponible en: `http://localhost:5000/api`.
+
+### `npm run test`
+
+Ejecuta las pruebas unitarias usando Jest.
+
+### `npm run lint`
+
+Ejecuta ESLint para verificar y reportar problemas de estilo y calidad del código.
+
+---
+
+## Endpoint principal
+
+### GET /product/{productId}/similar
+
+Obtiene los detalles de los productos similares al ID de producto proporcionado.
+
+#### Respuestas de la API
+
+- 200 OK: Respuesta exitosa con los productos similares.
+- 404 Not Found: Si el producto solicitado no existe o no tiene productos similares.
+- 500 Internal Server Error: Fallo en el servicio externo o errores inesperados.
+
+## Tecnologías utilizadas
+
+- **Node.js y Express**: Para construir la API REST.
+- **Jest**: Para pruebas unitarias.
+- **Docker y Docker Compose**: Para levantar los servicios simulados y pruebas de carga.
+- **k6 + Grafana**: Para realizar pruebas de rendimiento y visualizar métricas.
+- **ESLint**: Para asegurar la calidad del código.
+
+## Arquitectura y Patrones de Diseño
+
+### Arquitectura General
+
+Este proyecto está organizado siguiendo una arquitectura basada en funcionalidades o componentes y siguiendo principios de diseño como SOLID para mejorar la mantenibilidad.
+
+**Componentes por funcionalidad**  
+ Cada funcionalidad (por ejemplo, productos) contiene sus controladores, servicios, rutas y pruebas relacionados.
+
+Aunque al ser un proyecto pequeño los beneficios no son evidentes, esta organización:
+
+- Facilita la escalabilidad cuando el proyecto crece.
+- Permite trabajar en equipos más grandes de manera más cómoda.
+- Agrupa toda la lógica relacionada a una funcionalidad en un solo lugar, mejorando la mantenibilidad y la claridad del código.
+
+### Manejo de Errores
+
+- Los errores como 404 y 500 son gestionados y logueados apropiadamente.
+- Productos con errores individuales (como no encontrados o con fallos de servidor) son ignorados para no afectar la respuesta global.
+- El middleware centralizado de manejo de errores se encarga de registrar logs y enviar respuestas estándar.
+
+### Pruebas unitarias
+
+Para ejecutar los tests
+
+### `npm run test`
+
+Se prueban escenarios clave como:
+
+- Respuesta correcta con productos válidos.
+- Manejo de productos no encontrados (404).
+- Manejo de errores del servidor externo (500).
+- Ignorar productos con errores y devolver solo los válidos.
