@@ -23,6 +23,7 @@ export default defineConfig([
       "no-var": "error",
       "prefer-const": "warn",
       "max-len": ["warn", { code: 100, ignoreUrls: true }],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
     },
   },
   {
