@@ -10,6 +10,8 @@ export default defineConfig([
       sourceType: "module",
       globals: {
         ...globals.node,
+        ...globals.browser,
+        ...globals.jest,
       },
     },
     plugins: {
@@ -30,4 +32,5 @@ export default defineConfig([
       ".env",
     ],
   },
+
 ]);
