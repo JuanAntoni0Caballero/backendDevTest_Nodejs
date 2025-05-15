@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 
 import configApp from "./config/index.js";
-import indexRoutes from "./routes/index.routes.js";
+import indexRoutes from "./routes.js";
 import errorHandling from "./error-handling/index.js";
 
 dotenv.config();
