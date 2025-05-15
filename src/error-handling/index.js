@@ -6,7 +6,7 @@ export default function errorHandling(app) {
   });
 
 
-  app.use((err, req, res) => {
+  app.use((err, req, res, _next) => {
     logger.error(`${req.method} ${req.path} - ${err.message}`);
 
     const status = err.status || 500;
