@@ -83,6 +83,16 @@ Aunque al ser un proyecto pequeño los beneficios no son evidentes, esta organiz
 - Productos con errores individuales (como no encontrados o con fallos de servidor) son ignorados para no afectar la respuesta global.
 - El middleware centralizado de manejo de errores se encarga de registrar logs y enviar respuestas estándar.
 
+### Gestión de Productos con Respuestas Lentas
+
+Durante el desarrollo identifiqué casos en los que ciertos endpoints tardaban mucho tiempo en responder (hasta 50 segundos). Ante esto, vi varias opciones:
+
+- Esperar indefinidamente por todos los productos antes de responder.
+- Cancelar toda la petición si uno o varios productos se retrasan demasiado.
+- Aplicar un tiempo máximo de espera por producto individual y continuar con los que respondan a tiempo.
+
+Opté por la tercera opción para mejorar la experiencia del usuario priorizando la rapidez de respuesta. Si un producto tarda demasiado, simplemente se omite de la respuesta final. Esto permite entregar los resultados devueltos rapidamente en lugar de fallar completamente o hacer esperar al usuario.
+
 ### Pruebas unitarias
 
 Para ejecutar los tests
@@ -95,7 +105,3 @@ Se prueban escenarios clave como:
 - Manejo de productos no encontrados (404).
 - Manejo de errores del servidor externo (500).
 - Ignorar productos con errores y devolver solo los válidos.
-
-```
-
-```
