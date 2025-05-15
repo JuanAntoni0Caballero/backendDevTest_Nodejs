@@ -1,4 +1,4 @@
-import logger from '../config/logger.js'
+import logger from '../utils/logger.js';
 import { fetchWithTimeout } from '../utils/fetchWithTimeout.js';
 
 export async function fetchSimilarProducts(productId) {

@@ -1,4 +1,4 @@
-import logger from "../config/logger.js";
+import logger from "../utils/logger.js";
 
 export default function errorHandling(app) {
   app.use((req, res) => {

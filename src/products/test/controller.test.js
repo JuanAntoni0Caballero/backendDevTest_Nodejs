@@ -32,7 +32,9 @@ describe('GET /api/products/:id/similar', () => {
             const res = await request(app).get(`/api/products/${invalidId}/similar`);
 
             expect(res.statusCode).toBe(400);
-            expect(res.body).toHaveProperty('errorMessage', 'El identificador del producto debe ser un número válido');
+            expect(res.body)
+                .toHaveProperty('errorMessage',
+                    'El identificador del producto debe ser un número válido');
         }
     });
 
