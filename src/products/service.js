@@ -1,4 +1,5 @@
 import logger from '../config/logger.js'
+import { fetchWithTimeout } from '../utils/fetchWithTimeout.js';
 
 export async function fetchSimilarProducts(productId) {
     const similarIds = await getSimilarProductIds(productId);
@@ -30,7 +31,7 @@ export async function getProductDetailsByIds(ids) {
 
     const productDetailsPromises = ids.map(async (id) => {
         try {
-            const res = await fetch(`${BASE_URL}/${id}`);
+            const res = await fetchWithTimeout(`${BASE_URL}/${id}`, {}, 2000);
 
             if (!res.ok) {
                 if (res.status === 404) {
