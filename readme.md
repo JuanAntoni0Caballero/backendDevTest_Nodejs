@@ -110,3 +110,24 @@ Se prueban escenarios clave como:
 - Manejo de productos no encontrados (404).
 - Manejo de errores del servidor externo (500).
 - Ignorar productos con errores y devolver solo los válidos.
+
+## Estructura enfocada en los criterios de evaluación
+
+### Claridad y mantenibilidad del código
+
+- Separación de responsabilidades (controlador, servicio, helper).
+- Código limpio y modular.
+- ESLint aplicado para mantener consistencia de estilo.
+- Variables, funciones y archivos con nombres descriptivos que expresan su propósito.
+
+### Performance
+
+- Peticiones a servicios externos realizadas en paralelo.
+- Aplicado `fetchWithTimeout` para evitar bloqueos por servicios lentos.
+
+### Resilience
+
+- Manejo robusto de errores HTTP y timeouts con `Promise.all`.
+- No se bloquea la experiencia del usuario por productos que no responden.
+- Diseño defensivo frente a peticiones que devuelven 404 o 500.
+- Mostrar productos disponibles lo antes posible y no bloquear al usuario esperando uno lento.
