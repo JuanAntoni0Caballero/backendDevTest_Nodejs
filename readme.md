@@ -12,6 +12,14 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado:
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
+## Levantar entorno de desarrollo
+
+Para que la API funcione correctamente, es necesario levantar los servicios simulados mediante Docker Compose. Esto simula el comportamiento del servicio externo de productos.
+
+Desde la raíz del proyecto, ejecuta:
+
+### `docker-compose up -d`
+
 ## Scripts disponibles
 
 En el directorio del proyecto, puedes ejecutar los siguientes comandos:
@@ -60,8 +68,8 @@ Obtiene los detalles de los productos similares al ID de producto proporcionado.
 
 Este proyecto está organizado siguiendo una arquitectura basada en funcionalidades o componentes y siguiendo principios de diseño como SOLID para mejorar la mantenibilidad.
 
-**Componentes por funcionalidad**  
- Cada funcionalidad (por ejemplo, productos) contiene sus controladores, servicios, rutas y pruebas relacionados.
+**Componentes por funcionalidad**
+Cada funcionalidad (por ejemplo, productos) contiene sus controladores, servicios, rutas y pruebas relacionados.
 
 Aunque al ser un proyecto pequeño los beneficios no son evidentes, esta organización:
 
@@ -87,3 +95,7 @@ Se prueban escenarios clave como:
 - Manejo de productos no encontrados (404).
 - Manejo de errores del servidor externo (500).
 - Ignorar productos con errores y devolver solo los válidos.
+
+```
+
+```
