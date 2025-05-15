@@ -12,6 +12,11 @@ Antes de ejecutar la aplicación, asegúrate de tener instalado:
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 
+Igualmente debes crear un archivo **.env** en la raiz del proyecto y añadir las variables de entorno:
+
+- PORT=5000
+- BASE_URL = http://localhost:3001/product
+
 ## Levantar entorno de desarrollo
 
 Para que la API funcione correctamente, es necesario levantar los servicios simulados mediante Docker Compose. Esto simula el comportamiento del servicio externo de productos.
