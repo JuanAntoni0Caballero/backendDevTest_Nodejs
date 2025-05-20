@@ -1,6 +1,6 @@
 import request from 'supertest'
 import app from '../../app.js'
-import { Product } from '../interfaces/prodcut.js'
+import { Product } from '../interfaces/product.js'
 
 describe('GET /product/:id/similar', () => {
   it('should return 200 and similar products for a valid product', async () => {
