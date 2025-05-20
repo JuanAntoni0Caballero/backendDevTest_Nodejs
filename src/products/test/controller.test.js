@@ -1,12 +1,12 @@
 import request from "supertest";
 import app from '../../app.js'
 
-describe('GET /api/products/:id/similar', () => {
+describe('GET /product/:id/similar', () => {
 
 
     it('should return 200 and similar products for a valid product', async () => {
 
-        const response = await request(app).get('/api/products/1/similar');
+        const response = await request(app).get('/product/1/similar');
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
 
@@ -19,7 +19,7 @@ describe('GET /api/products/:id/similar', () => {
     });
 
     it('should return 404 for a non-existing product', async () => {
-        const response = await request(app).get('/api/products/99999/similar');
+        const response = await request(app).get('/product/99999/similar');
         expect(response.status).toBe(404);
         expect(response.body).toHaveProperty('errorMessage', 'Product not found');
     });
@@ -29,7 +29,7 @@ describe('GET /api/products/:id/similar', () => {
         const invalidIds = ['abc', '!', 'null', 'undefined'];
 
         for (const invalidId of invalidIds) {
-            const res = await request(app).get(`/api/products/${invalidId}/similar`);
+            const res = await request(app).get(`/product/${invalidId}/similar`);
 
             expect(res.statusCode).toBe(400);
             expect(res.body)

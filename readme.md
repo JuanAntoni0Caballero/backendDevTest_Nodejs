@@ -35,7 +35,7 @@ Instala las dependencias del proyecto.
 
 ### `npm run dev`
 
-Ejecuta la aplicación en modo desarrollo con nodemon. La API estará disponible en: `http://localhost:5000/api`.
+Ejecuta la aplicación en modo desarrollo con nodemon. La API estará disponible en: `http://localhost:5000`.
 
 ### `npm run test`
 
