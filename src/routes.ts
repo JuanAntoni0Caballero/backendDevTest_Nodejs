@@ -1,8 +1,8 @@
-import { Router } from 'express'
-const router = Router()
+import { Router, Request, Response } from 'express'
 import ProductsRoutes from './products/routes.js'
+const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', (req: Request, res: Response) => {
   res.json('All good in here')
 })
 
