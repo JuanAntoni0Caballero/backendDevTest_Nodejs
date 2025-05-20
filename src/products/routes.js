@@ -1,7 +1,7 @@
-import { Router } from "express";
-const router = Router();
-import { getSimilarProducts } from "./controller.js";
+import { Router } from 'express'
+const router = Router()
+import { getSimilarProducts } from './controller.js'
 
-router.get('/:productId/similar', getSimilarProducts);
+router.get('/:productId/similar', getSimilarProducts)
 
-export default router;
+export default router
