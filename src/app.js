@@ -1,18 +1,18 @@
-import dotenv from "dotenv";
-import express from "express";
+import dotenv from 'dotenv'
+import express from 'express'
 
-import configApp from "./config/index.js";
-import indexRoutes from "./routes.js";
-import errorHandling from "./error-handling/index.js";
+import configApp from './config/index.js'
+import indexRoutes from './routes.js'
+import errorHandling from './error-handling/index.js'
 
-dotenv.config();
+dotenv.config()
 
-const app = express();
+const app = express()
 
-configApp(app);
+configApp(app)
 
-app.use(indexRoutes);
+app.use(indexRoutes)
 
-errorHandling(app);
+errorHandling(app)
 
-export default app;
+export default app

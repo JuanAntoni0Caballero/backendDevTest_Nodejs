@@ -1,19 +1,16 @@
-import logger from "../utils/logger.js";
+import logger from '../utils/logger.js'
 
 export default function errorHandling(app) {
   app.use((req, res) => {
-    res.status(404).json({ message: "This route does not exist" });
-  });
-
+    res.status(404).json({ message: 'This route does not exist' })
+  })
 
   app.use((err, req, res, _next) => {
-    logger.error(`${req.method} ${req.path} - ${err.message}`);
+    logger.error(`${req.method} ${req.path} - ${err.message}`)
 
-    const status = err.status || 500;
+    const status = err.status || 500
     res.status(status).json({
-      errorMessage: err.status === 500
-        ? "Error interno del servidor"
-        : err.message
-    });
-  });
+      errorMessage: err.status === 500 ? 'Error interno del servidor' : err.message,
+    })
+  })
 }
