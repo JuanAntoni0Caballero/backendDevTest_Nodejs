@@ -1,10 +1,10 @@
-import express from 'express'
+import express, { Application } from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
 const FRONTEND_URL = process.env.ORIGIN || 'http://localhost:3000'
 
-export default function configApp(app) {
+export default function configApp(app: Application): void {
   app.set('trust proxy', 1)
 
   app.use(
