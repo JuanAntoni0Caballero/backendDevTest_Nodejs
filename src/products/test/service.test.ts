@@ -1,14 +1,14 @@
-import { fetchSimilarProducts } from '../service.js'
+import { fetchSimilarProducts } from '../service'
 
-global.fetch = jest.fn()
+global.fetch = jest.fn() as jest.Mock
 
 describe('fetchSimilarProducts', () => {
   beforeEach(() => {
-    fetch.mockReset()
+    ;(fetch as jest.Mock).mockReset()
   })
 
   it('should skip products that return 404 or 500 errors', async () => {
-    fetch
+    ;(fetch as jest.Mock)
       .mockResolvedValueOnce({
         ok: true,
         json: async () => [1, 2, 5],
