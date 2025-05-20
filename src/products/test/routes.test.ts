@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '../../app.js'
+import app from '../../app'
 
 describe('API Routes', () => {
   it('should return 404 for unknown routes', async () => {
