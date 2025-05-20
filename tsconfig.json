@@ -14,7 +14,7 @@
     "checkJs": false,
     "resolveJsonModule": true,
     "noImplicitAny": true,
-    "types": ["jest"]
+    "types": ["jest", "node"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
