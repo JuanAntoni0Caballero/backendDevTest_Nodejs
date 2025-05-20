@@ -1,6 +1,6 @@
 import logger from '../utils/logger.js'
 import { fetchWithTimeout } from '../utils/fetchWithTimeout.js'
-import { Product } from './interfaces/prodcut.js'
+import { Product } from './interfaces/product.js'
 import { CustomError } from '../error-handling/index.js'
 
 export async function fetchSimilarProducts(productId: string): Promise<Product[]> {
@@ -47,8 +47,10 @@ export async function getProductDetailsByIds(ids: number[]): Promise<Product[]> 
       }
 
       return (await res.json()) as Product
-    } catch (err: any) {
-      logger.error(`Error al obtener producto ${id}: ${err.message}`)
+    } catch (err: unknown) {
+      logger.error(
+        `Error al obtener producto ${id}: ${err instanceof Error ? err.message : String(err)}`
+      )
       return null
     }
   })

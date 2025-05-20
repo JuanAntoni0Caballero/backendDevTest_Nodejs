@@ -3,5 +3,5 @@ export interface Product {
   name: string
   price: number
   availability: boolean
-  [key: string]: any
+  [key: string]: string | number | boolean
 }

@@ -37,6 +37,10 @@ Instala las dependencias del proyecto.
 
 Ejecuta la aplicación en modo desarrollo con nodemon. La API estará disponible en: `http://localhost:5000`.
 
+### `npm run format`
+
+Ejecuta el formateo automático del código fuente utilizando Prettier.
+
 ### `npm run test`
 
 Ejecuta las pruebas unitarias usando Jest.
@@ -44,6 +48,10 @@ Ejecuta las pruebas unitarias usando Jest.
 ### `npm run lint`
 
 Ejecuta ESLint para verificar y reportar problemas de estilo y calidad del código.
+
+### `npm run build`
+
+Compila el proyecto y genera los archivos listos para producción.
 
 ---
 
@@ -100,9 +108,9 @@ Opté por la tercera opción para mejorar la experiencia del usuario priorizando
 
 ### Pruebas unitarias
 
-Para ejecutar los tests
-
 ### `npm run test`
+
+Para ejecutar los tests.
 
 Se prueban escenarios clave como:
 

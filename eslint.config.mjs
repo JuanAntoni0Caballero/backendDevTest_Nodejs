@@ -1,45 +1,42 @@
 import js from '@eslint/js'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
-import prettier from 'eslint-config-prettier'
+import parser from '@typescript-eslint/parser'
+import eslintPluginTs from '@typescript-eslint/eslint-plugin'
 import eslintPluginPrettier from 'eslint-plugin-prettier'
+import prettier from 'eslint-config-prettier'
 
 export default defineConfig([
   {
-    files: ['**/*.{js,mjs,cjs}'],
+    files: ['**/*.ts'],
+    ignores: ['dist', 'node_modules', 'jest.config.js', 'shared/k6/**/*.js'],
     languageOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 'latest',
       sourceType: 'module',
+      parser: parser,
+      parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: process.cwd(),
+      },
       globals: {
         ...globals.node,
-        ...globals.browser,
         ...globals.jest,
       },
     },
     plugins: {
-      js,
+      '@typescript-eslint': eslintPluginTs,
       prettier: eslintPluginPrettier,
     },
     rules: {
       ...js.configs.recommended.rules,
+      ...eslintPluginTs.configs.recommended.rules,
       'no-console': 'warn',
-      'no-var': 'error',
-      'prefer-const': 'warn',
-      'max-len': ['warn', { code: 100, ignoreUrls: true }],
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'prettier/prettier': 'error',
     },
   },
   {
-    linterOptions: {
-      configType: 'flat',
-    },
-    settings: {},
     rules: {
       ...prettier.rules,
     },
-  },
-  {
-    ignores: ['node_modules', 'dist', '.env'],
   },
 ])
