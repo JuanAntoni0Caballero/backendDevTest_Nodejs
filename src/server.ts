@@ -1,7 +1,7 @@
-import app from './app.js'
+import app from './app.ts'
 import logger from './utils/logger.js'
 
-const PORT = process.env.PORT || 5000
+const PORT: number = parseInt(process.env.PORT || '5000', 10)
 
 app.listen(PORT, () => {
   logger.info(`Server listening on http://localhost:${PORT}`)
