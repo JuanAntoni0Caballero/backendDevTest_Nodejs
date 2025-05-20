@@ -6,6 +6,6 @@ router.get("/", (req, res) => {
   res.json("All good in here");
 });
 
-router.use('/products', ProductsRoutes)
+router.use('/product', ProductsRoutes)
 
 export default router;

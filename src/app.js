@@ -11,7 +11,7 @@ const app = express();
 
 configApp(app);
 
-app.use("/api", indexRoutes);
+app.use(indexRoutes);
 
 errorHandling(app);
 
