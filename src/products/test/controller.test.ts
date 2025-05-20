@@ -1,5 +1,6 @@
 import request from 'supertest'
 import app from '../../app.js'
+import { Product } from '../interfaces/prodcut.js'
 
 describe('GET /product/:id/similar', () => {
   it('should return 200 and similar products for a valid product', async () => {
@@ -7,7 +8,9 @@ describe('GET /product/:id/similar', () => {
     expect(response.status).toBe(200)
     expect(Array.isArray(response.body)).toBe(true)
 
-    response.body.forEach((product) => {
+    const products: Product[] = response.body
+
+    products.forEach((product) => {
       expect(product).toHaveProperty('id')
       expect(product).toHaveProperty('name')
       expect(product).toHaveProperty('price')
