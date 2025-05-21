@@ -1,14 +1,8 @@
 import logger from '../utils/logger.js'
-import { fetchWithTimeout } from '../utils/fetchWithTimeout.js'
 import { Product } from './interfaces/product.js'
 import { CustomError } from '../error-handling/index.js'
 
-export async function fetchSimilarProducts(productId: string): Promise<Product[]> {
-  const similarIds = await getSimilarProductIds(productId)
-  return await getProductDetailsByIds(similarIds)
-}
-
-async function getSimilarProductIds(productId: string): Promise<number[]> {
+export async function getSimilarProductIds(productId: string): Promise<number[]> {
   const BASE_URL = process.env.BASE_URL
   const response = await fetch(`${BASE_URL}/${productId}/similarids`)
 
@@ -27,34 +21,33 @@ async function getSimilarProductIds(productId: string): Promise<number[]> {
   return await response.json()
 }
 
-export async function getProductDetailsByIds(ids: number[]): Promise<Product[]> {
+export async function* getProductDetailsByIdsStream(
+  ids: number[]
+): AsyncGenerator<Product, void, unknown> {
   const BASE_URL = process.env.BASE_URL
 
-  const productDetailsPromises = ids.map(async (id) => {
+  for (const id of ids) {
     try {
-      const res = await fetchWithTimeout(`${BASE_URL}/${id}`, {}, 2000)
+      const res = await fetch(`${BASE_URL}/${id}`)
 
       if (!res.ok) {
         if (res.status === 404) {
           logger.warn(`Producto ${id} no encontrado (404)`)
-          return null
+          continue
         }
         if (res.status === 500) {
           logger.error(`Error del servidor para producto ${id} (500)`)
-          return null
+          continue
         }
         throw new Error(`Error al obtener producto ${id} (status ${res.status})`)
       }
 
-      return (await res.json()) as Product
+      const product = (await res.json()) as Product
+      yield product
     } catch (err: unknown) {
       logger.error(
         `Error al obtener producto ${id}: ${err instanceof Error ? err.message : String(err)}`
       )
-      return null
     }
-  })
-
-  const products = await Promise.all(productDetailsPromises)
-  return products.filter((product): product is Product => product !== null)
+  }
 }
