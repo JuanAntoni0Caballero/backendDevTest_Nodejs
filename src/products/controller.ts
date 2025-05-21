@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { fetchSimilarProducts } from './service.js'
+import { getSimilarProductIds, getProductDetailsByIdsStream } from './service.js'
 import { CustomError } from '../error-handling/index.js'
 
 export async function getSimilarProducts(
@@ -16,8 +16,21 @@ export async function getSimilarProducts(
       err.status = 400
       throw err
     }
-    const similarProducts = await fetchSimilarProducts(productIdStr)
-    res.status(200).json(similarProducts)
+
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    })
+
+    const similarIds = await getSimilarProductIds(productIdStr)
+
+    for await (const product of getProductDetailsByIdsStream(similarIds)) {
+      res.write(`data: ${JSON.stringify(product)}\n\n`)
+    }
+
+    res.write('event: end\ndata: fin\n\n')
+    res.end()
   } catch (err) {
     next(err)
   }
