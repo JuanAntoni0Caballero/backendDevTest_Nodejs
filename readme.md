@@ -73,7 +73,7 @@ Obtiene los detalles de los productos similares al ID de producto proporcionado.
 - **Jest**: Para pruebas unitarias.
 - **Docker y Docker Compose**: Para levantar los servicios simulados y pruebas de carga.
 - **k6 + Grafana**: Para realizar pruebas de rendimiento y visualizar métricas.
-- **ESLint**: Para asegurar la calidad del código.
+- **ESLint y Prettier**: Para asegurar la calidad del código.
 
 ## Arquitectura y Patrones de Diseño
 
@@ -96,15 +96,18 @@ Aunque al ser un proyecto pequeño los beneficios no son evidentes, esta organiz
 - Productos con errores individuales (como no encontrados o con fallos de servidor) son ignorados para no afectar la respuesta global.
 - El middleware centralizado de manejo de errores se encarga de registrar logs y enviar respuestas estándar.
 
-### Gestión de Productos con Respuestas Lentas
+### Nuevo enfoque con SSE (Server-Sent Events)
 
-Durante el desarrollo identifiqué casos en los que ciertos endpoints tardaban mucho tiempo en responder (hasta 50 segundos). Ante esto, vi varias opciones:
+En lugar de esperar todos los productos para devolverlos juntos, ahora los productos se envían uno a uno al cliente a medida que se van obteniendo desde el servicio externo.
 
-- Esperar indefinidamente por todos los productos antes de responder.
-- Cancelar toda la petición si uno o varios productos se retrasan demasiado.
-- Aplicar un tiempo máximo de espera por producto individual y continuar con los que respondan a tiempo.
+Este cambio mejora la resiliencia y la experiencia del usuario al proporcionar datos tan pronto como estén disponibles, sin tener que esperar a toda la colección.
 
-Opté por la tercera opción para mejorar la experiencia del usuario priorizando la rapidez de respuesta. Si un producto tarda demasiado, simplemente se omite de la respuesta final. Esto permite entregar los resultados devueltos rapidamente en lugar de fallar completamente o hacer esperar al usuario.
+- Respuestas más rápidas: el cliente empieza a recibir productos sin esperar a que todos estén listos.
+- No se repiten productos ni se envía el array entero con cada actualización.
+- Mejor experiencia de usuario: productos lentos no bloquean el flujo.
+- La respuesta se construye progresivamente en el cliente.
+- Ideal para listas largas o respuestas parciales.
+- Los productos con errores se ignoran.
 
 ### Pruebas unitarias
 
